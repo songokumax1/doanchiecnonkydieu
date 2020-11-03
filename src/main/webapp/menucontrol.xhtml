@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h2 class="text-center">#{titlecontrol}</h2>
+<h:form>
+    <center>
+        <h:commandLink class="btn btn-secondary" action="admincontrol?faces-redirect=true" value="Thành Viên" /> | <h:commandLink class="btn btn-success" action="loaicauhoicontrol?faces-redirect=true" value="Loại câu hỏi" /> |
+        <h:commandLink class="btn btn-warning" action="cauhoicontrol?faces-redirect=true" value="Câu hỏi"/>
+    </center>
+    <center><h:commandLink class="btn btn-warning" action="thongkecontrol?faces-redirect=true" value="Thống kê"/> | 
+    <h:commandLink class="btn btn-info" action="lichsucontrol?faces-redirect=true" value="Lịch sử"/></center>
+</h:form>
+</html>

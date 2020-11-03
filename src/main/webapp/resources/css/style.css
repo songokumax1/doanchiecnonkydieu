@@ -1,0 +1,115 @@
+@charset "utf-8";
+/* CSS Document */
+[class*=col-] {
+	padding:2px;
+}
+section {
+	margin-top:10px;
+}
+/* CSS HEADER */
+header.navbar, .dropdown-menu {
+	background-color:#ebffff;
+	margin-bottom:0;
+}
+
+header.navbar .navbar-brand img {
+	width:90px;
+}
+
+header.navbar ul a {
+	padding:30px;
+}
+
+header.navbar .navbar-btn {
+	margin-top:20px;
+}
+
+/* CSS info */
+#section1 li {
+	background:linear-gradient(#09F,#0CF);
+	padding:1.5px;
+}
+
+#section1 li a {
+	color:#FFF;
+	padding:9.5px 15px;
+}
+
+button.navbar-toggle {
+	margin:20px;
+}
+
+/* CSS detail */
+#section2 figure {
+	padding:20px;
+	position:relative;
+}
+
+#section2 figure img {
+	cursor:pointer;
+	transition:transform .5s ease;	
+}
+
+#section2 figure img:hover {
+	transform:scale(1.1);
+}
+
+#section2 figure figcaption {
+	background-color:rgb(0,102,255, .7);
+	color:#FFF;
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	padding:5px;
+}
+
+/* CSS CONTACT */
+#section3 .panel {
+	padding:20px;
+	background:url(../images/logo.png) no-repeat center right, url(../images/logo.png) no-repeat center left;
+	background-color:rgb(235, 255, 255);
+}
+
+#section3 figure > img {
+	border:5px double #069;
+}
+
+#section3 figcaption {
+	margin-top:10px;
+}
+
+#section3 figcaption img {
+	width:24px;
+}
+
+h1.underline::after {
+	content:" ";
+	width:100px;
+	height:5px;
+	display:block;
+	margin:0 auto;
+	background-color:#0FF;
+	margin-bottom:50px;
+}
+
+/* CSS FOOTER */
+footer {
+	padding:10px;
+	background: url(images/Logo_1.png) no-repeat left center, linear-gradient(to right,#63bee8,#FFF,#09c7c7);
+	border:1px solid #CCC;
+}
+
+div.go-top {
+	opacity:.5;
+	position:fixed;
+	right:10px;
+	bottom:10px;
+}
+div.text-center {
+    text-align: center;
+    margin-top: 20px;
+    color: #FAAC58;
+    font-size: 20px;
+   
+}

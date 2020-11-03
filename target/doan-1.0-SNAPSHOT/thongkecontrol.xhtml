@@ -1,0 +1,91 @@
+<ui:composition template="templates/base.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+     
+    <ui:define name="content">
+                <ui:include src="menucontrol.xhtml">
+                    <ui:param name="titlecontrol" value="Loại câu hỏi" />
+                </ui:include>
+        
+        #{thongkeBean.runFirt()}
+        
+        <h:form>
+        <center>
+            <h:selectOneMenu class="btn btn-lg btn-light dropdown-toggle" id="selectmonth" value="#{thongkeBean.selectmonth}" 
+                                          converter="javax.faces.Integer">
+                <f:selectItems var="m" value="#{thongkeBean.listmonth}"
+                                           itemLabel="#{m}" itemValue="#{m}"/>
+                <f:ajax event="valueChange" execute="@this"/>
+              </h:selectOneMenu>     
+              |
+              <h:selectOneMenu class="btn btn-lg btn-light dropdown-toggle" value="#{thongkeBean.selectyear}" 
+                                          converter="javax.faces.Integer">
+                  <f:selectItems var="y" value="#{thongkeBean.listyear}"
+                                           itemLabel="#{y}" itemValue="#{y}"/>
+                  <f:ajax event="valueChange" execute="@this" render="selectmonth" listener="#{thongkeBean.xemThu()}"/>
+              </h:selectOneMenu>
+       </center>
+       </h:form>
+         <center>
+        <h:form>
+        <h:commandButton value="XEM">
+            <f:ajax event="click" onevent="runAllChart()" listener="#{thongkeBean.setDefault()}" render="txtTime tables" />
+            </h:commandButton>
+         </h:form>
+             <b><h:outputText id="txtTime" value="Tháng #{thongkeBean.selectmonth} - Năm #{thongkeBean.selectyear}" /></b>
+        </center>
+        <center>
+        <b>
+            Top điểm: <font color="red"><h:outputText value="#{thongkeBean.getTopUser(2)}" /></font> | Top câu hỏi: <font color="red"><h:outputText value="#{thongkeBean.getTopUser(1)}" /></font>
+        </b>
+        </center>
+        <h:panelGroup id="grChart">
+            <div id="chartpoint_div" ></div>
+            <div id="chartcauhoi_div" ></div>
+            <center>
+                <h4>Thống kê thành viên trả lời nhiều câu và đạt nhiều điểm nhất</h4>
+                <div id="table_div" ></div>
+            </center>
+        </h:panelGroup>
+        <h:form id="tables">
+        <div><h4 style="text-align: center;background-color: #BDBDBD; margin-bottom: 0; padding: 8px;">LỊCH SỬ CHƠI</h4></div>
+        <ul id="tablels" style="background-color: #ECEADF;">
+            
+            <c:forEach id="tablechinh" items="#{thongkeBean.listCauhoi}" var="i">
+            <li>
+                <b><font color="red">#{i.users.username}</font></b>#{i.status==0?" đã không trả lời câu ": i.status==1? " đã trả lời được câu " : " đã đoán được đáp án câu "}
+                <b>#{i.cauhoi.noidung}</b>#{i.status==0?" bỏ lỡ ":" nhận được "}<b><font color="green">#{i.tongdiem}</font></b> (#{i.time})
+            </li>
+        </c:forEach>
+        </ul>
+        <div style="text-align: right; padding-right: 12px">
+            <b>Tổng: #{thongkeBean.allListWithDate.size()}</b>
+                        </div>
+                    <center>
+                <h:panelGrid columns="3">
+                    <h:panelGroup id="btnpre" layout="block">
+                        <h:commandButton value="PRE" styleClass="text-left" rendered="#{thongkeBean.page gt 1}">
+                            <f:ajax event="click" render="tables btnpre btnnext" listener="#{thongkeBean.ChangPage(-2)}"></f:ajax>
+                        </h:commandButton>
+                    </h:panelGroup>
+                    <h:selectOneMenu class="center-bloselectOneListboxck" converter="javax.faces.Integer" value="#{thongkeBean.number}" styleClass="form-control">
+                        <f:selectItem itemLabel="10" itemValue="10" />
+                        <f:selectItem itemLabel="20" itemValue="20"/>
+                        <f:selectItem itemLabel="50" itemValue="50"/>
+                        <f:selectItem itemLabel="100" itemValue="100"/>
+                        <f:ajax event="change" listener="#{thongkeBean.ChangPage(0)}" render="tables btnpre btnnext"></f:ajax>
+                    </h:selectOneMenu>
+                     <h:panelGroup id="btnnext" layout="block">
+                         <h:commandButton class="text-right" value="NEXT" styleClass="text-left" rendered="#{thongkeBean.checkLichSuNext() == true}">
+                             <f:ajax event="click" render="tables btnpre btnnext" listener="#{thongkeBean.ChangPage(2)}"></f:ajax>
+                        </h:commandButton>
+                     </h:panelGroup>
+                </h:panelGrid>
+                 </center>
+                    </h:form>
+    </ui:define>
+   
+</ui:composition>

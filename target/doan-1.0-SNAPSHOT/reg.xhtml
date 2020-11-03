@@ -1,0 +1,83 @@
+<ui:composition template="templates/base.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions">
+    <ui:define name="content">
+        <h1 class="text-center">#{pMsg['reg.dktv']}</h1>;
+        
+        <h:messages styleClass="text-warning" globalOnly="true" />
+        <h:form>
+            
+            <div class="container">
+                <div class="form-group">
+                    <h:outputLabel value="#{pMsg['reg.hoten']}" />
+                    <h:panelGrid columns="2">
+                    <h:inputText id="txtName" value="#{userBean.name}" styleClass="form-control"
+                                 required="true" requiredMessage="#{pMsg['reg.kodetrong']}"
+                                 validatorMessage="#{pMsg['reg.kohople']}" >
+                        <f:validateLength maximum="50" minimum="1" />
+                        <f:validateRegex pattern="^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$" />
+                    </h:inputText>
+                    <h:message for="txtName" style="color: red;" />
+                    </h:panelGrid>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{pMsg['reg.email']}" />
+                    <h:panelGrid columns="2">
+                    <h:inputText id="txtEmail" value="#{userBean.email}" styleClass="form-control"
+                                 required="true" requiredMessage="#{pMsg['reg.kodetrong']}"
+                                 validatorMessage="#{pMsg['reg.kohople']}" >
+                        <f:validateLength maximum="50" minimum="1" />
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </h:inputText>
+                    <h:message for="txtEmail" style="color: red;" />
+                    </h:panelGrid>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{pMsg['reg.tendangnhap']}" />
+                    <h:panelGrid columns="2">
+                    <h:inputText id="txtUsername" value="#{userBean.username}" styleClass="form-control"
+                                 required="true" requiredMessage="#{pMsg['reg.kodetrong']}"
+                                 validatorMessage="#{pMsg['reg.kohople2']}">
+                        <f:validateLength maximum="15" minimum="8" />
+                        <f:validateRegex pattern="^[a-zA-Z0-9]{1,15}$" />
+                    </h:inputText>
+                    <h:message for="txtUsername" style="color: red;" />
+                    </h:panelGrid>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="#{pMsg['reg.matkhau']}" />
+                    <h:panelGrid columns="2">
+                        <h:inputSecret id="txtPass" value="#{userBean.password}" styleClass="form-control"
+                                     required="true" requiredMessage="#{pMsg['reg.kodetrong']}"
+                                     validatorMessage="#{pMsg['login.kohoplekytu']}">
+                        <f:validateLength maximum="15" minimum="8" />
+                            <f:validateRegex pattern="^[a-zA-Z0-9@!#\$\^%*()+=\-\[\]\\\';,\.\/\{\}\|\:\?]+$" />
+                        </h:inputSecret>
+                    <h:message for="txtPass" style="color: red;" />
+                    </h:panelGrid>
+                </div>
+                <div class="form-group">
+                    
+                    <h:outputLabel value="#{pMsg['reg.rematkhau']}" />
+                    <h:panelGrid columns="2">
+                    <h:inputSecret id="txtconfirmPass" value="#{userBean.confirmPass}" styleClass="form-control" 
+                                 required="true" requiredMessage="#{pMsg['reg.kodetrong']}"
+                                 validator="PasswordConfirmValidator" />
+                    <h:message for="txtconfirmPass" style="color: red;" />
+                    </h:panelGrid>
+                </div>
+                <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="6LcbNPkUAAAAACEkXq9uasu31RKO_I0PsIGIwLz5"></div>
+                </div>
+                <div class="form-group">
+                    <h:commandButton value="#{pMsg['reg.dangky']}" class="btn btn-warning" action="#{userBean.Reg()}" />
+                </div>
+            </div>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>

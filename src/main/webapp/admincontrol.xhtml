@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>admin Control</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/base.xhtml">
+            <ui:define name="content">
+                <ui:include src="menucontrol.xhtml">
+                    <ui:param name="titlecontrol" value="#{pMsg['admincontrol.danhsachtv']}" />
+                </ui:include>
+                <hr></hr>
+                <h:messages id="txtthongbao" class="text-center" globalOnly="true"/>
+                
+                <h:form>
+                <h:panelGrid columns="3">
+                <h:selectOneMenu id="selectsearch" class="center-bloselectOneListboxck"  value="#{userBean.typesearch}" styleClass="form-control">
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.timho']}" itemValue="fullname" />
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.username']}" itemValue="username"/>
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.email']}" itemValue="email"/>
+                </h:selectOneMenu>
+                    <h:inputText id="txtkeyword" value="#{userBean.keyword}">
+                        
+                    </h:inputText>
+                    
+                    <h:commandButton value="#{pMsg['admincontrol.timkiem']}">
+                        <f:ajax event="click" listener="#{userBean.setDefaultSort()}" execute="selectsearch txtkeyword" render="form:tvtable" />
+                    </h:commandButton>
+                    </h:panelGrid>
+                    </h:form>
+                
+                <h:form id="form">
+                    <h:panelGroup id='tvtable'>
+                <h:dataTable var="u" value="#{userBean.getUser()}" styleClass="table table-bordered">
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.maso']}">
+                                <f:ajax event="click" listener="#{userBean.setSort(1)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        #{u.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.hoten1']}">
+    				<f:ajax event="click" listener="#{userBean.setSort(2)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                         #{u.fullname}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.username1']}">
+    				<f:ajax event="click" listener="#{userBean.setSort(3)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        #{u.username}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.email1']}">
+    				<f:ajax event="click" listener="#{userBean.setSort(4)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        #{u.email}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.date']}">
+    				<f:ajax event="click" listener="#{userBean.setSort(5)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        #{u.regdate}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.diem']}">
+    				<f:ajax event="click" listener="#{userBean.setSort(6)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        <h:outputText value="#{u.diem}" rendered="#{userBean.isEdit != u.id}"/>
+                        <h:inputText id="txteditdiem" value="#{userBean.diem}" rendered="#{userBean.isEdit == u.id}"
+                                     required="true" requiredMessage="#{pMsg['admincontrol.kodetrong']}"
+                                     converter="javax.faces.Integer"
+                                     converterMessage="#{pMsg['admincontrol.int']}">
+                            <f:validateLength minimum="1" maximum="9" />
+                        </h:inputText> 
+                        <h:message for="txteditdiem" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.quyen']}">
+    				<f:ajax event="click" listener="#{userBean.setSort(7)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        <h:outputText value="#{u.role}" rendered="#{userBean.isEdit != u.id}"/>
+                        <h:selectOneMenu class="center-bloselectOneListboxck"  value="#{userBean.role}" styleClass="form-control" rendered="#{userBean.isEdit == u.id}">
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.User']}" itemValue="USER" />
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.Admin']}" itemValue="ADMIN"/>
+                    </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="#{pMsg['admincontrol.tinhtrang']}">
+                                
+    				<f:ajax event="click" listener="#{userBean.setSort(8)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        <h:outputText value="#{u.band==0?pMsg['admincontrol.mo']:pMsg['admincontrol.khoa']}" rendered="#{userBean.isEdit != u.id}"/>
+                        <h:selectOneMenu class="center-bloselectOneListboxck"  value="#{userBean.band}" styleClass="form-control" rendered="#{userBean.isEdit == u.id}">
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.mo']}" itemValue="0" />
+                        <f:selectItem itemLabel="#{pMsg['admincontrol.khoa']}" itemValue="1"/>
+                    </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{pMsg['admincontrol.hanhdong']}</f:facet>
+                       
+                        <h:commandButton value="#{pMsg['admincontrol.sua']}" rendered="#{userBean.isEdit != u.id}">
+                            <f:ajax render=":form:tvtable txtthongbao" event="click" listener="#{userBean.ChangeEdit(u)}" />
+                        </h:commandButton>
+                        <h:commandButton value="#{pMsg['admincontrol.luu']}" action="#{userBean.SaveChange()}" rendered="#{userBean.isEdit == u.id}">
+                        </h:commandButton>
+                        <h:commandButton value="#{pMsg['admincontrol.huy']}" rendered="#{userBean.isEdit == u.id}">
+                            <f:ajax render=":form:tvtable" event="click" listener="#{userBean.HuyChangeEdit()}" />
+                        </h:commandButton>
+                      
+                    </h:column>
+                  
+                </h:dataTable>
+                        <div style="text-align: right; padding-right: 12px">
+                            <b>Tổng: #{userBean.listUser.size()}</b>
+                        </div>
+                </h:panelGroup>
+                    <center>
+                <h:panelGrid columns="3">
+                    <h:panelGroup id="btnpre" layout="block">
+                        <h:commandButton value="PRE" styleClass="text-left" rendered="#{userBean.page gt 1}">
+                            <f:ajax event="click" render="tvtable btnpre btnnext txtthongbao" listener="#{userBean.ChangPage(-2)}"></f:ajax>
+                        </h:commandButton>
+                    </h:panelGroup>
+                    <h:selectOneMenu class="center-bloselectOneListboxck" converter="javax.faces.Integer" value="#{userBean.number}" styleClass="form-control">
+                        <f:selectItem itemLabel="10" itemValue="10" />
+                        <f:selectItem itemLabel="20" itemValue="20"/>
+                        <f:selectItem itemLabel="50" itemValue="50"/>
+                        <f:selectItem itemLabel="100" itemValue="100"/>
+                        <f:ajax event="change" listener="#{userBean.ChangPage(0)}" render="tvtable btnpre btnnext txtthongbao"></f:ajax>
+                    </h:selectOneMenu>
+                     <h:panelGroup id="btnnext" layout="block">
+                         <h:commandButton class="text-right" value="NEXT" styleClass="text-left" rendered="#{userBean.checkUserNext() == true}">
+                            <f:ajax event="click" render="btnnext tvtable btnpre txtthongbao" listener="#{userBean.ChangPage(2)}"></f:ajax>
+                        </h:commandButton>
+                     </h:panelGroup>
+                </h:panelGrid>
+                 </center>
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

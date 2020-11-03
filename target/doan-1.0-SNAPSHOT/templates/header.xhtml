@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <section style="margin-top: 0;" class="bg-success" id="section1">
+        <div class="row">
+           
+            <div class="col-md-12">
+                <div class="carousel slide" id="bannerCarouselId" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#bannerCarouselId" data-slide-to="0" class="active"></li>
+                        <li data-target="#bannerCarouselId" data-slide-to="1"></li>
+                        <li data-target="#bannerCarouselId" data-slide-to="2"></li>
+                        <li data-target="#bannerCarouselId" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <h:graphicImage name="banner/3.jpg" style="width:1350px; height: 280px " library="images" styleClass="img-responsive" alt="Banner 1"/>
+                        </div>
+                        <div class="item">
+                            <h:graphicImage name="banner/4.jpg" style="width:1350px; height: 280px " library="images" styleClass="img-responsive" alt="Banner 2"/>
+                        </div>
+                        <div class="item">
+                            <h:graphicImage name="banner/1.jpg" style="width:1350px; height: 280px " library="images" styleClass="img-responsive" alt="Banner 3"/>
+                        </div>
+                        <div class="item">
+                            <h:graphicImage name="banner/2.png" style="width:1350px; height: 280px " library="images" styleClass="img-responsive" alt="Banner 4"/>
+                        </div>
+                    </div>
+                    <a href="#bannerCarouselId" class="left carousel-control" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a href="#bannerCarouselId" class="right carousel-control" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</ui:composition>

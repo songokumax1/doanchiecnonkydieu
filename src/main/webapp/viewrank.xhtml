@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     <ui:composition template="templates/base.xhtml">
+         <ui:define name="content">
+             
+                 <h2 style="color: red; text-align: center;">BẢNG XẾP HẠNG TOP 10</h2>
+                 <center>
+                     <h:dataTable style="width: 40%;" var="item" class="table table-bordered" value="#{userBean.rankUser}">
+                     <h:column>
+                         <f:facet name="header">Username</f:facet>
+                        <b>#{item.user.username}</b>
+                    </h:column>
+                     <h:column>
+                        <f:facet name="header">Số điểm</f:facet>
+                        <b><font color="green">#{item.user.diem}</font></b>
+                    </h:column>
+                         <h:column>
+                        <f:facet name="header">Xếp hạng</f:facet>
+                        <center><h:graphicImage library="images/rankicon" width="60px" height="63px" name="#{item.rank}.png" /></center>
+                    </h:column>
+                 </h:dataTable>
+                 </center>
+            
+         </ui:define>
+     </ui:composition>
+</html>
+

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <div><h4 style="text-align: center;background-color: #BDBDBD; font-size: 20px; margin-bottom: 0; padding: 8px;">#{pMsg['viewfooter.lichsuchoi']}</h4></div>
+        <ul style="background-color: #ECEADF;margin-bottom: 0;">
+            <c:forEach items="#{lichsuBean.lichsuView}" var="i">
+            <li>
+                <b><font color="red">#{i.users.username} </font></b>#{i.status==0? pMsg['viewfooter.status0']: i.status==1? pMsg['viewfooter.status1'] : pMsg['viewfooter.status2']} 
+                #{i.status==0? pMsg['viewfooter.bolo'] :pMsg['viewfooter.nhanduoc']} <b><font color="green">#{i.tongdiem}</font></b> #{pMsg['viewfooter.diem']} <b>(#{i.time})</b>
+            </li>
+        </c:forEach>
+        </ul>
+   
+  
+</html>
+

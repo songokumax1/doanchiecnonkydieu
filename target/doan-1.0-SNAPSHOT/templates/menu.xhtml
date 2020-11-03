@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    
+    <header class="navbar navbar-default" id="myHeader" style="padding-bottom: 0px">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-target="#mainNavBarId" data-toggle="collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.xhtml" class="navbar-brand">
+                    <h:graphicImage width="70px" height="55px" name="logo.png" library="images" alt="Logo"/>
+                </a>
+            </div>
+            <div id="mainNavBarId" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.xhtml"><span class="glyphicon glyphicon-home"></span> #{pMsg['menu.trangchu']}</a>
+                    </li>
+                    <li>
+                        <a href="luatchoi.xhtml"><span class="glyphicon glyphicon-info-sign"></span> #{pMsg['menu.luatchoi']}</a>
+                    </li>
+                    <li>
+                        <a href="viewrank.xhtml"><span class="glyphicon glyphicon-stats"></span> #{pMsg['menu.xephang']}</a>
+                    </li>
+                    <li>
+                        <a href="index.xhtml"><span class="glyphicon glyphicon-bell"></span> #{pMsg['menu.thongbao']}</a>
+                    </li>
+                </ul>
+                <div class="btn-group navbar-right">
+                    <h:form>
+                        <c:if test="#{facesContext.externalContext.sessionMap.get('user') != null}">
+                            <h:panelGrid columns="3">
+                                <h:commandButton class="btn btn-info navbar-btn" value="#{facesContext.externalContext.sessionMap.get('user').username} (#{facesContext.externalContext.sessionMap.get('user').diem} điểm)" action="profileuser.xhtml?faces-redirect=true"></h:commandButton>
+                                <h:commandButton styleClass="btn btn-success navbar-btn" action="admincontrol.xhtml?faces-redirect=true" value="#{pMsg['menu.quanly']}" rendered="#{facesContext.externalContext.sessionMap.get('user').role=='ADMIN'}"  />
+                                <h:commandButton styleClass="btn btn-info navbar-btn" action="#{userBean.Logout()}" value="#{pMsg['menu.dangxuat']}" />
+                            </h:panelGrid>
+                        </c:if>
+                         <c:if test="#{facesContext.externalContext.sessionMap.get('user') == null}">
+                             <h:commandButton styleClass="btn btn-info navbar-btn" action="#{userBean.PageLogin()}" value="#{pMsg['menu.dangnhap']}" ></h:commandButton>
+                            <h:commandButton styleClass="btn btn-info navbar-btn" action="#{userBean.PageReg()}" value="#{pMsg['menu.dangky']}" >
+                            </h:commandButton>
+                        </c:if>
+                    </h:form>
+                </div>
+            </div>
+
+        </div>
+    </header>
+</ui:composition>
+
+

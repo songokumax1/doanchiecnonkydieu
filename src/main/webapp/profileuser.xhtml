@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="templates/base.xhtml">
+        <ui:define name="content">
+            #{userBean.getUserProfile()}
+            <h3 style="text-align: center;">THÔNG TIN NGƯỜI DÙNG</h3>
+            <h:messages id="msgprofile" styleClass="text-warning" globalOnly="true" />
+          <div class="container">
+              <div class="row">
+                <div class="col-lg-4">
+                            <h:form id="formprofile">
+
+                      <div class="form-group">
+                          <h:outputLabel value="Họ tên" />
+                          <h:panelGrid columns="2">
+                          <h:inputText id="txtName" value="#{userBean.name}" styleClass="form-control"
+                                       required="true" requiredMessage="Vui lòng nhập"
+                                       validatorMessage="Không hợp lệ (Tối đa 50 ký tự)" >
+                              <f:validateLength maximum="50" minimum="1" />
+                              <f:validateRegex pattern="^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$" />
+                          </h:inputText>
+                          <h:message for="txtName" style="color: red;" />
+                          </h:panelGrid>
+                      </div>
+                      <div class="form-group">
+                          <h:outputLabel value="Email" />
+                          <h:panelGrid columns="2">
+                          <h:inputText id="txtEmail" value="#{userBean.email}" disabled="true" styleClass="form-control" />
+                          </h:panelGrid>
+                      </div>
+                      <div class="form-group">
+                          <h:outputLabel value="Username" />
+                          <h:panelGrid columns="2">
+                          <h:inputText id="txtUsername" value="#{userBean.username}" disabled="true" styleClass="form-control"/>
+                          </h:panelGrid>
+                      </div>
+                      <div class="form-group">
+                          <h:outputLabel value="Mật khẩu( để trống nếu không đổi)" />
+                          <h:panelGrid columns="2">
+                              <h:inputSecret id="txtPass" value="#{userBean.password}" styleClass="form-control"
+                                           validatorMessage="Không hợp lệ (Từ 8 đến 15 ký tự,không chứ khoảng trắng)">
+                                  <f:validateLength maximum="15" minimum="8"/>
+                                  <f:validateRegex pattern="^[a-zA-Z0-9@!#\$\^%*()+=\-\[\]\\\';,\.\/\{\}\|\:\?]+$" />
+                              </h:inputSecret>
+                          <h:message for="txtPass" style="color: red;" />
+                          </h:panelGrid>
+                      </div>
+                      <div class="form-group">
+                          <h:outputLabel value="Xác nhận mật khẩu cũ để thay đổi" />
+                          <h:panelGrid columns="2">
+                          <h:inputSecret id="txtconfirmPass" value="#{userBean.confirmPass}" styleClass="form-control" 
+                                       required="true" requiredMessage="Vui lòng nhập">
+                          </h:inputSecret>
+                          <h:message for="txtconfirmPass" style="color: red;" />
+                          </h:panelGrid>
+                      </div>
+                      <div class="form-group">
+                          <h:commandButton value="Cập nhật" class="btn btn-warning" action="#{userBean.setUserProfile()}" />
+                      </div>   
+                    </h:form>
+                  </div>
+                  
+                  <div class="col-lg-8">
+                            <h:form id="tables">
+              <div><h4 style="text-align: center;background-color: #BDBDBD; margin-bottom: 0; padding: 8px;">LỊCH SỬ CHƠI</h4></div>
+              <ul id="tablels" style="background-color: #ECEADF;">
+
+                  <c:forEach id="tablechinh" items="#{userBean.listLichSuUser}" var="i">
+                  <li>
+                      Bạn#{i.status==0?" đã không trả lời câu ": i.status==1? " đã trả lời được câu " : " đã đoán được đáp án câu "}
+                      <b>#{i.cauhoi.noidung}</b>#{i.status==0?" bỏ lỡ ":" nhận được "}<b><font color="green">#{i.tongdiem}</font></b> (#{i.time})
+                  </li>
+              </c:forEach>
+              </ul>
+              <div style="text-align: right; padding-right: 12px">
+                  <b>Tổng: #{userBean.listAllLichSuUser.size()}</b>
+                              </div>
+                          <center>
+                      <h:panelGrid columns="3">
+                          <h:panelGroup id="btnpre" layout="block">
+                              <h:commandButton value="PRE" styleClass="text-left" rendered="#{userBean.page gt 1}">
+                                  <f:ajax event="click" render="tables btnpre btnnext" listener="#{userBean.ChangPage(-2)}"></f:ajax>
+                              </h:commandButton>
+                          </h:panelGroup>
+                          <h:selectOneMenu class="center-bloselectOneListboxck" converter="javax.faces.Integer" value="#{userBean.number}" styleClass="form-control">
+                              <f:selectItem itemLabel="10" itemValue="10" />
+                              <f:selectItem itemLabel="20" itemValue="20"/>
+                              <f:selectItem itemLabel="50" itemValue="50"/>
+                              <f:selectItem itemLabel="100" itemValue="100"/>
+                              <f:ajax event="change" listener="#{userBean.ChangPage(0)}" render="tables btnpre btnnext"></f:ajax>
+                          </h:selectOneMenu>
+                           <h:panelGroup id="btnnext" layout="block">
+                               <h:commandButton class="text-right" value="NEXT" styleClass="text-left" rendered="#{userBean.checkLichsuUserNext() == true}">
+                                   <f:ajax event="click" render="tables btnpre btnnext" listener="#{userBean.ChangPage(2)}"></f:ajax>
+                              </h:commandButton>
+                           </h:panelGroup>
+                      </h:panelGrid>
+                       </center>
+               </h:form>
+                </div>
+              </div>
+         </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

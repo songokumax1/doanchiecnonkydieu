@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Trang chủ</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/base.xhtml">
+            <ui:define name="content">
+                
+                <hr></hr>
+                <canvas id='canvastrung' style="z-index: -1;position: absolute;" width='1500px' height='500px' ></canvas>
+                <h3><h:graphicImage width="80xp" height="80xp" library="images" name="question.svg"/><h:outputText style="margin-left: 35px; background-color: #E3CEF6; padding:  15px;" class="text-center" value="#{playerBean.cauHoiChuan}" /></h3>
+                <h:messages id="thongbaoplayer" style="padding: 8px;color: #FAAC58; font-size: 20px;" globalOnly="true" />
+                <h:panelGrid columns="3" width="100%">
+                    <h:panelGroup>
+                <h:form id="formquay" >
+                    <h:commandButton style="margin-left: 35px" value="QUAY NGAY" id="spin_start" class="btn" rendered="#{playerBean.statusPlay==true}" onclick="startSpin();" >
+                            <f:ajax event="click" render="thongbaoplayer" />
+                    </h:commandButton>
+                    <h:commandLink class="btn btn-success" value="CHƠI MỚI" action="#{playerBean.newPlay()}" rendered="#{playerBean.btnmoi==true}" />
+                 </h:form>  
+                    </h:panelGroup>
+                    
+                    <center>
+                        <table>
+                            <tr>
+                                <td class="the_wheel">
+                                    <canvas id="canvas" width="434" height="500">
+                                    </canvas>
+                                </td>  
+                            </tr>
+                        </table>
+                    </center>
+                    
+                    <h:panelGroup>
+                        <h3 id="countdown"></h3>
+                        <h:panelGrid id="ttquay" columns="2">
+                            <h:outputText style="font-weight: 600" value="Số lần trả lời sai: " /><font color="red"><b>#{playerBean.solansai}</b></font>
+                            <h:outputText style="font-weight: 600" value="Tổng điểm: " /><font color="blue"><b>#{playerBean.diemtong}</b></font>
+                        <h:form id="btndoanra">
+                            <h:commandButton value="ĐOÁN RA" onclick="doanRa();countDown();" id="spin_doanra" class="btn" rendered="#{playerBean.btndoan==true}" >
+                                <f:ajax event="click" render="thongbaoplayer" />
+                                
+                        </h:commandButton>
+                        </h:form>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <center><b><h3><h:outputText id="txtdatl" style="padding-left: 43px;" value="#{playerBean.datraloi}" /></h3></b>
+                <h:form id="formdapan">
+                    <h:inputText id="diemquay" value="#{playerBean.diemtam}" class="hide" />
+                    <h:inputText id="loaitl" value="#{playerBean.chondoan}" class="hide" />
+                <h:panelGroup id="nhapdapan" >
+                    <h:inputText id="txttraloi" class="input-group" value="#{playerBean.traloi}" />
+                    <h:commandButton id="btntraloi" onclick="stop();" value="Trả lời">
+                        <f:ajax event="click" onevent="resetWheel1" render="btndoanra:spin_doanra txtdatl thongbaoplayer nhapdapan formdapan:nhapdapan formdapan:diemquay formquay ttquay countdown" execute="diemquay loaitl txttraloi" listener="#{playerBean.setTraloi()}" 
+                            />
+                </h:commandButton>
+                </h:panelGroup>
+                </h:form>
+                </center>
+                        <h:form id="formxx">
+                            <h:inputText id="txtloaitruot" class="hide" value="#{playerBean.loaitruot}" />
+                            <h:commandButton id="btnxx" class="hide">
+                                <f:ajax event="click" listener="#{playerBean.setDoan()}" render="ttquay thongbaoplayer btndoanra:spin_doanra formquay" execute="txtloaitruot" />
+                            </h:commandButton>
+                      
+                        </h:form>
+                        
+                   
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

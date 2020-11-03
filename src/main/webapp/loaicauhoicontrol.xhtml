@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Loại câu hỏi</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="templates/base.xhtml">
+            <!-- Add chức năng control  -->
+            <ui:define name="content">
+                <ui:include src="menucontrol.xhtml">
+                    <ui:param name="titlecontrol" value="Loại câu hỏi" />
+                </ui:include>
+        <!-- Bang them  -->
+      <div class="modal fade" id="addLoaicauhoi">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h2 class="modal-title">
+                        <span>Thêm loại câu hỏi</span>
+                        <a href="#" class="close" data-dismiss="modal">X</a>
+                    </h2>
+                </div>
+                <div class="modal-body bg-info">
+                    <h:form enctype="multipart/form-data">
+                        <div class="form-group">
+                           <h:outputText value="Tên" />
+                            <h:panelGrid columns="2">
+                                <h:inputText id="txtnameadd" value="#{loaicauhoiBean.name}" class="form-control"
+                                             required="true" requiredMessage="Không được để trống"
+                                             validatorMessage="Không hợp lệ">
+                                    <f:validateRegex pattern="^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$" />
+                                    <f:validateLength maximum="200" minimum="1" />
+                                </h:inputText>
+                                <h:message for="txtnameadd" />
+                            </h:panelGrid>
+                        </div>
+                        <div class="form-group">
+                            <h:outputText value="Hình ảnh" />
+                            <h:panelGrid columns="2">
+                             <h:inputFile id="inputfileadd" styleClass="form-control" value="#{loaicauhoiBean.imgFile}"
+                                          required="true" requiredMessage="Không được để trống"
+                                     validator="UploadValidator"/>
+                             <h:message for="inputfileadd" />
+                             </h:panelGrid>
+                        </div>
+                        <div class="modal-footer bg-info">
+                            <h:commandButton value="Thêm" class="btn btn-warning" action="#{loaicauhoiBean.Add()}" />
+                            <input type="button" class="btn btn-default" value="Hủy" data-dismiss="modal" />
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+                <hr></hr>
+                <button class="btn btn-success" style="float: right;" data-toggle="modal" data-target="#addLoaicauhoi">
+                    <span class="glyphicon glyphicon-plus"> Thêm</span>
+                </button>
+                <h:messages id="txtthongbao" class="text-center" globalOnly="true" />
+                <h:form>
+                <h:panelGrid columns="3">
+                    <h:selectOneMenu id="selectsearch" class="center-bloselectOneListboxck"  value="#{loaicauhoiBean.typesearch}" styleClass="form-control">
+                        <f:selectItem itemLabel="Tìm theo Tên" itemValue="ten" />
+                </h:selectOneMenu>
+                    <h:inputText id="txtkeyword" value="#{loaicauhoiBean.keyword}">
+                        
+                    </h:inputText>
+                    
+                    <h:commandButton value="Tìm kiếm">
+                        <f:ajax event="click" listener="#{loaicauhoiBean.setDefaultSort()}" execute="selectsearch txtkeyword" render="form:tvtable" />
+                    </h:commandButton>
+                    </h:panelGrid>
+                    </h:form>
+                <h:form id="form" enctype="multipart/form-data">
+                    <h:panelGroup id='tvtable'>
+                        <h:dataTable var="l" value="#{loaicauhoiBean.getListLoaicauhoi()}" styleClass="table table-bordered">
+                    <h:column>
+                        <f:facet name="header" class="active">
+                            <h:commandLink value="Mã số">
+                                <f:ajax event="click" listener="#{loaicauhoiBean.setSort(1)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        #{l.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="active">
+                            <h:commandLink value="Tên">
+                                <f:ajax event="click" listener="#{loaicauhoiBean.setSort(2)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        <h:outputText value="#{l.name}" rendered="#{loaicauhoiBean.isEdit != l.id}"/>
+                        <h:inputText id="txteditten" value="#{loaicauhoiBean.name}" rendered="#{loaicauhoiBean.isEdit == l.id}" 
+                                     required="true" requiredMessage="Không được để trống" validatorMessage="Không hợp lệ">
+                            <f:validateRegex pattern="^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+)$" />
+                            <f:validateLength maximum="200" minimum="1" />
+                        </h:inputText>
+                        <h:message for="txteditten" class="text-center text-warning"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="active">Hình ảnh</f:facet>
+                        <h:graphicImage name="#{l.img}" library="images" width="50px" height="50px" rendered="#{loaicauhoiBean.isEdit != l.id}"/>
+                        <h:outputText value="Để trống nếu không đổi" class="text-center" rendered="#{loaicauhoiBean.isEdit == l.id}" />
+                        <h:inputFile id="inputfile" styleClass="form-control" value="#{loaicauhoiBean.imgFile}" rendered="#{loaicauhoiBean.isEdit == l.id}"
+                                     validator="UploadValidator"/>
+                        <h:message for="inputfile" class="text-center text-warning" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="active">
+                            <h:commandLink value="Ngày cập nhật">
+                                <f:ajax event="click" listener="#{loaicauhoiBean.setSort(3)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        #{l.date}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandLink value="Tình trạng">
+                                <f:ajax event="click" listener="#{loaicauhoiBean.setSort(4)}" render="form:tvtable" />
+    			   </h:commandLink>
+                        </f:facet>
+                        <h:outputText value="#{l.band==0?'Mở':'Khóa'}" rendered="#{loaicauhoiBean.isEdit != l.id}"/>
+                        <h:selectOneMenu class="center-bloselectOneListboxck"  value="#{loaicauhoiBean.band}" styleClass="form-control" rendered="#{loaicauhoiBean.isEdit == l.id}">
+                        <f:selectItem itemLabel="Mở" itemValue="0" />
+                        <f:selectItem itemLabel="Khóa" itemValue="1"/>
+                    </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="active">Hành động</f:facet>
+                       
+                        <h:commandButton value="SỬA" rendered="#{loaicauhoiBean.isEdit != l.id}">
+                            <f:ajax render=":form:tvtable txtthongbao" event="click" listener="#{loaicauhoiBean.ChangeEdit(l)}" />
+                        </h:commandButton>
+                        <h:commandButton value="LƯU" rendered="#{loaicauhoiBean.isEdit == l.id}">
+                            <f:ajax render=":form:tvtable txtthongbao" event="click" execute=":form:tvtable" listener="#{loaicauhoiBean.SaveChange(l.img)}"/>
+                        </h:commandButton>
+                        <h:commandButton value="HỦY" rendered="#{loaicauhoiBean.isEdit == l.id}">
+                            <f:ajax render=":form:tvtable" event="click" listener="#{loaicauhoiBean.HuyChangeEdit()}" />
+                        </h:commandButton>
+                      
+                    </h:column>
+                  
+                </h:dataTable>
+                        <div style="text-align: right; padding-right: 12px">
+                            <b>Tổng: #{loaicauhoiBean.loaicauhoi.size()}</b>
+                        </div>
+                </h:panelGroup>
+                    <center>
+                        <h:panelGrid columns="3">
+                    <h:panelGroup id="btnpre" layout="block" style="padding-right: 12px;">
+                        <h:commandButton value="PRE" styleClass="text-left" rendered="#{loaicauhoiBean.page gt 1}">
+                            <f:ajax event="click" render="tvtable btnpre btnnext txtthongbao" listener="#{loaicauhoiBean.ChangPage(-2)}"></f:ajax>
+                        </h:commandButton>
+                    </h:panelGroup>
+                    <h:selectOneMenu class="center-bloselectOneListboxck" converter="javax.faces.Integer" value="#{loaicauhoiBean.number}" styleClass="form-control">
+                        <f:selectItem itemLabel="10" itemValue="10" />
+                        <f:selectItem itemLabel="20" itemValue="20"/>
+                        <f:selectItem itemLabel="50" itemValue="50"/>
+                        <f:selectItem itemLabel="100" itemValue="100"/>
+                        <f:ajax event="change" listener="#{loaicauhoiBean.ChangPage(0)}" render="tvtable btnpre btnnext txtthongbao"></f:ajax>
+                    </h:selectOneMenu>
+                        <h:panelGroup id="btnnext" layout="block" style="padding-left: 12px;">
+                            <h:commandButton class="text-right" value="NEXT" styleClass="text-left" rendered="#{loaicauhoiBean.checkLoaiCauHoiNext() == true}">
+                             <f:ajax event="click" render="btnnext tvtable btnpre txtthongbao" listener="#{loaicauhoiBean.ChangPage(2)}"></f:ajax>
+                        </h:commandButton>
+                     </h:panelGroup>
+                </h:panelGrid>
+                </center>
+                    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

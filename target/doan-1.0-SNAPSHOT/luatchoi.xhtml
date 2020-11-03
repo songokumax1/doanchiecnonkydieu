@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+     <ui:composition template="templates/base.xhtml">
+         <ui:define name="content">
+             <div class="center">
+                 <h2 style="color: red; text-align: center;">LUẬT CHƠI</h2>
+             <ul style="list-style-type: square ">
+                 <li>Người chơi đăng nhập, rồi chọn loại câu hỏi để bắt đầu chơi</li>
+                 <li>Câu hỏi sẽ xuất hiện trên màn hình trước</li>
+                 <li>Người chơi bấm quay ngay, khi kết thúc vòng quay: Kim chỉ vào ô điểm hoặc ô <b>XUI XẺO</b>
+                     <ul style="list-style-type: none">
+                         <li>+ Người chơi có 10s để nhập câu trả lời. Đáp án là số chữ cái tương ứng với số <b>"*"</b> bên dưới vòng quay</li>
+                         <li>+ Người chơi nhập 1 chữ cái IN HOA cho mỗi lần quay, nếu trả lời đúng sẽ được điểm tương ứng với ô điểm kim chỉ vào. Trả lời sai, sẽ bị tính 1 lần sai</li>
+                     </ul>
+                 </li>
+                 <li>Người chơi trả lời sai 3 lần sẽ kết thúc cuộc chơi. Nếu quay trúng ô xui xẻo, người chơi cũng bị tính thêm 1 lần sai</li>
+                 <li>Nếu người chơi bấm nút <b>"Đoán ra"</b>, sẽ được phép trả lời toàn câu thay vì đoán từng chữ. Mỗi chữ đoán được sẽ tương ứng 500đ (người chơi đoán từng chữ cũng có thể chọn "Đoán ra").
+                     Trả lời sai ở <b>"Đoán ra"</b> thì sẽ <b>"kết thúc cuộc chơi".</b></li>
+             </ul> 
+             </div>
+         </ui:define>
+     </ui:composition>
+</html>
+
